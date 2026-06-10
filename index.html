@@ -2,102 +2,224 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Lyric Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONGsmith Pro - Multi-Genre Lyric Engine</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 8px; font-size: 16px; }
-        button { background: #4f46e5; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 4px; }
-        button:hover { background: #4338ca; }
-        #output { margin-top: 30px; padding: 20px; background: #f3f4f6; border-left: 5px solid #4f46e5; white-space: pre-line; }
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #111827;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #1f2937;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-main); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        h1 { font-size: 28px; margin-bottom: 10px; color: var(--text-main); }
+        .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        select:focus, input:focus { outline: none; border-color: var(--accent); }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover { background-color: var(--accent-hover); }
+        #output-block {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: var(--bg-main);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            display: none;
+        }
+        .song-meta { font-family: monospace; color: var(--accent); font-size: 12px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+        .song-title { font-size: 22px; font-weight: bold; margin-bottom: 20px; }
+        .lyric-section { margin-bottom: 20px; font-family: "Georgia", serif; font-size: 17px; line-height: 1.7; color: #e5e7eb; }
+        .section-tag { font-family: monospace; font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: bold; }
+        .chorus-style { border-left: 2px dashed #4b5563; padding-left: 15px; font-style: italic; }
     </style>
 </head>
 <body>
 
-    <h1>SONGsmith Mini</h1>
-    <p>Choose an artist style, fill in the blanks, and generate your song.</p>
+<div class="container">
+    <h1>SONGsmith Pro</h1>
+    <p class="subtitle">Multi-Genre Catalog-Wide Songwriting Synthesizer</p>
 
-    <div class="input-group">
-        <label for="artist">Artist Style:</label>
-        <select id="artist">
-            <option value="taylor">Taylor Swift (Country & Pop Catalog)</option>
-            <option value="beatles">The Beatles (60s Rock & Psychedelic Catalog)</option>
-            <option value="drake">Drake (Melancholic R&B & Hip-Hop Catalog)</option>
+    <div class="form-group">
+        <label for="genre">Select Musical Architecture</label>
+        <select id="genre">
+            <option value="hiphop">Hip-Hop / Boom Bap (Street poetry & heavy cadence)</option>
+            <option value="metal">Heavy Metal / Metalcore (Aggressive riffs & dark themes)</option>
+            <option value="pop">Modern Synth-Pop (High-energy hooks & bright neon imagery)</option>
+            <option value="indie">Indie / Folk Acoustic (Warm storytelling & deep nostalgia)</option>
+            <option value="cyberpunk">Cyberpunk / Industrial EDM (Distorted synths & sci-fi grit)</option>
         </select>
     </div>
 
-    <div class="input-group">
-        <label for="phrase">A phrase for the chorus:</label>
-        <input type="text" id="phrase" value="dancing in the headlights">
+    <div class="form-group">
+        <label for="phrase">Core Phrase (The central theme/hook)</label>
+        <input type="text" id="phrase" value="breaking through the noise">
     </div>
 
-    <div class="input-group">
-        <label for="object">A physical object:</label>
-        <input type="text" id="object" value="faded leather jacket">
+    <div class="form-group">
+        <label for="object">Physical Object</label>
+        <input type="text" id="object" value="shattered glass">
     </div>
 
-    <div class="input-group">
-        <label for="place">A place or name:</label>
-        <input type="text" id="place" value="the old highway">
+    <div class="form-group">
+        <label for="anchor">Setting / Name Anchor</label>
+        <input type="text" id="anchor" value="Neon City">
     </div>
 
-    <button onclick="generateLyrics()">Generate Song</button>
+    <button onclick="synthesizeLyrics()">Synthesize Track Blueprint</button>
 
-    <div id="output" style="display:none;"></div>
+    <div id="output-block">
+        <div id="meta-container" class="song-meta"></div>
+        <div id="title-container" class="song-title"></div>
+        <div id="lyrics-container"></div>
+    </div>
+</div>
 
-    <script>
-        // Dictionary of words unique to each artist's whole catalog
-        const vocabulary = {
-            taylor: ["cardigan", "midnight rain", "neon signs", "2 AM whispers", "golden string"],
-            beatles: ["sunshine", "submarines", "yesterday", "nowhere man", "diamond skies"],
-            drake: ["views", "late-night texts", "expensive taste", "fake friends", "the 6ix"]
-        };
-
-        function generateLyrics() {
-            const artist = document.getElementById('artist').value;
-            const phrase = document.getElementById('phrase').value;
-            const object = document.getElementById('object').value;
-            const place = document.getElementById('place').value;
-
-            // Grab random vocabulary words from that specific artist's universe
-            const artistWords = vocabulary[artist];
-            const word1 = artistWords[0];
-            const word2 = artistWords[1];
-            const word3 = artistWords[2];
-
-            // Assemble the song structure
-            let song = `
-            <b>[VERSE 1]</b>
-            Staring out at ${place}, looking at the view.
-            Holding onto this ${object}, thinking about you.
-            The air feels full of ${word1}, heavy and slow,
-            With secrets that only the two of us know.
-
-            <b>[CHORUS]</b>
-            Oh, hear the rhythm of the ${word2},
-            Singing, "${phrase}."
-            Caught up in the patterns of yesterday's maze,
-            Shouting, "${phrase}."
-
-            <b>[BRIDGE]</b>
-            But we built our walls out of ${word3} and dust,
-            Trying to find something that we could still trust.
-            If you ever go back to ${place}, look around,
-            Leave that old ${object} right there on the ground.
-
-            <b>[OUTRO]</b>
-            Fading out near ${place}...
-            Still thinking about that ${object}...
-            Just an echo of ${word1}...
-            `;
-
-            // Display the result on the page
-            const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = song;
-            outputDiv.style.display = 'block';
+<script>
+// Deep data dictionary covering catalog DNA across highly diverse genres
+const GENRE_MATRICES = {
+    hiphop: {
+        name: "Hip-Hop / Boom Bap",
+        structure: ["Verse", "Chorus", "Verse", "Chorus", "Outro"],
+        vocabulary: ["concrete jungle", "heavy bassline", "written rhymes", "city lights", "fading shadows"],
+        templates: {
+            Verse: "Yeah, stepping through the blocks out in {anchor},\nRhymes heavy in the chest, watching how the clock spin.\nClutching onto this {object}, looking for an exit sign,\nCaught up in the {word1} trying to preserve my mind.\nNothing comes easy when you're fighting through the cold grid,\nJust a product of the secrets that the old world hid.\nLiving with the {word2} echoing inside the street,\nWaiting for the day the lyrics and the baseline meet.",
+            Chorus: "We yelling out: '{phrase}' down the block,\nThrough the static and the {word3} ticking on the clock.\nYeah, '{phrase}' — write it on the wall,\nStanding at the summit, refusing to let it fall.",
+            Outro: "Yeah, fading out over {anchor}...\nKeep your hand on that {object}.\nNothing but the sound of the {word1}.\nTrack drops out. Static."
         }
-    </script>
+    },
+    metal: {
+        name: "Heavy Metal / Metalcore",
+        structure: ["Verse", "Chorus", "Breakdown", "Chorus", "Outro"],
+        vocabulary: ["burning embers", "heavy chains", "thunderous wrath", "internal chaos", "iron cage"],
+        templates: {
+            Verse: "The structures collapse around the gates of {anchor},\nTime erodes our sanity, dragging us further under.\nThis {object} remains a symbol of the weight we carry,\nTrapped inside a world that is far too cold to marry.\nThrough the smoke of the {word1}, we scream out for an end,\nBroken down by promises that were never meant to bend.\nWith the {word2} tearing through the fragile skin,\nThis is exactly where the final war begins.",
+            Chorus: "Can you hear the sky screaming: '{phrase}'!\nShattering the chains of this {word3} built on lies.\nRise from the ashes, screaming '{phrase}'!\nThere is nowhere left for the weak to hide.",
+            Breakdown: "[BRUTAL BREAKDOWN - HALF TIME TEMPO]\nCrushing under the weight of the {word1}!\nLook at what you built at {anchor}!\nBreak the {object}!"
+        }
+    },
+    pop: {
+        name: "Modern Synth-Pop",
+        structure: ["Verse", "PreChorus", "Chorus", "Verse", "Chorus", "Outro"],
+        vocabulary: ["neon lights", "midnight drive", "retro beats", "heartbeat echoes", "velvet sky"],
+        templates: {
+            Verse: "Cruising past the neon signs along the edge of {anchor},\nTurn the radio up loud to drown out all the thunder.\nLooking at this {object} sitting on the passenger seat,\nFeeling the synthetic pulse beneath our moving feet.\nWrapped up in the memories of a {word1} summer night,\nChasing down a feeling until the sky turns bright.\nWe were dancing through the {word2} without a single care,\nCatching the reflection of the starlight in your hair.",
+            PreChorus: "And the tension builds up as the bassline drops low,\nInto the patterns of the {word3} that we used to know...",
+            Chorus: "We are singing out loud: '{phrase}' tonight,\nUnderneath the glitter and the electric light.\nYeah, '{phrase}', let the music take control,\nHealing all the fractures hidden deep inside your soul.",
+            Outro: "Fading out into the velvet sky over {anchor}...\nLeft behind with nothing but this {object}...\nJust the echo of the {word1}... Bye."
+        }
+    },
+    indie: {
+        name: "Indie / Folk Acoustic",
+        structure: ["Verse", "Chorus", "Verse", "Chorus", "Bridge", "Chorus"],
+        vocabulary: ["woodland mist", "faded photographs", "porch swings", "golden hour", "wildflowers"],
+        templates: {
+            Verse: "The autumn leaves are settling down on the roads of {anchor},\nAnd I still hear the acoustic strings humming with wonder.\nI found that old {object} buried deep inside my drawer,\nReminding me of things I don't think about anymore.\nLost inside the memories of the {word1} on the hill,\nWhere the world slowed down and everything felt calm and still.\nWe carved our names into the bark near the {word2} path,\nRunning from the shadows of the winter's heavy wrath.",
+            Chorus: "And the wind whispers gently: '{phrase}',\nThrough the changing seasons and the passing days.\nYeah, '{phrase}' is the song the river sings,\nCarrying the weight of all these broken things.",
+            Bridge: "But we built our sanctuaries out of {word3} and twine,\nHoping we could freeze the hands of passing time.\nIf you ever make your way back out to {anchor}, write a line,\nTell me if the old tree is still standing fine.",
+            Outro: "Acoustic guitar plucking out a slow cadence...\nFading out past {anchor}.\nStill holding onto that {object}.\nJust the whisper of the {word1}."
+        }
+    },
+    cyberpunk: {
+        name: "Cyberpunk / Industrial EDM",
+        structure: ["Verse", "Build", "Drop", "Verse", "Drop"],
+        vocabulary: ["glitch matrix", "chrome horizon", "hologram rain", "digital overload", "synthetic veins"],
+        templates: {
+            Verse: "System initialization sequence running inside {anchor},\nPower grids fluctuating wildly under toxic thunder.\nScanning the anomalies inside this modified {object},\nOur human components are becoming harder to protect.\nPlugged into the datastream of the {word1} core,\nWe don't even remember what we were fighting for.\nWith the {word2} overriding our neural commands,\nWe watch the empire slip right out of our hands.",
+            Build: "[AUDIO BUILDUP - FREQUENCY FILTER RISING]\nUploading system data... Target: {anchor}.\nInjecting the payload: '{phrase}'\nReleasing the energy of the {word3}!",
+            Drop: "[INDUSTRIAL ELECTRONIC DROP - HEAVY SYNTH DISTORTION]\n'{phrase}'!\nGlitching through the matrix!\nPurge the {object}!\nRebooting systems..."
+        }
+    }
+};
+
+function synthesizeLyrics() {
+    const genreKey = document.getElementById('genre').value;
+    const phrase = document.getElementById('phrase').value.trim() || "breaking the cycle";
+    const object = document.getElementById('object').value.trim() || "iron token";
+    const anchor = document.getElementById('anchor').value.trim() || "the horizon";
+
+    const matrix = GENRE_MATRICES[genreKey];
+    const vocab = matrix.vocabulary;
+
+    // UI Configuration Update
+    document.getElementById('meta-container').textContent = `Format Engine: ${matrix.name} Blueprint`;
+    document.getElementById('title-container').textContent = `The ${vocab[3].toUpperCase()} Protocol`;
+
+    const canvas = document.getElementById('lyrics-container');
+    canvas.innerHTML = '';
+
+    // Walk through structural blueprint arrays dynamically
+    matrix.structure.forEach(section => {
+        let templateText = matrix.templates[section];
+        if (!templateText) return;
+
+        // Compile and format string markers contextually
+        let parsedLines = templateText
+            .replace(/{anchor}/g, anchor)
+            .replace(/{object}/g, object)
+            .replace(/{phrase}/g, phrase)
+            .replace(/{word1}/g, vocab[0])
+            .replace(/{word2}/g, vocab[1])
+            .replace(/{word3}/g, vocab[2]);
+
+        // Build HTML Node
+        const block = document.createElement('div');
+        block.className = "lyric-section";
+        if (section === 'Chorus' || section === 'Drop') {
+            block.classList.add('chorus-style');
+        }
+
+        block.innerHTML = `<span class="section-tag">[${section.toUpperCase()}]</span>${parsedLines.replace(/\n/g, '<br>')}`;
+        canvas.appendChild(block);
+    });
+
+    document.getElementById('output-block').style.display = 'block';
+}
+</script>
 
 </body>
 </html>
