@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Lyric Generator</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 8px; font-size: 16px; }
+        button { background: #4f46e5; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #4338ca; }
+        #output { margin-top: 30px; padding: 20px; background: #f3f4f6; border-left: 5px solid #4f46e5; white-space: pre-line; }
+    </style>
+</head>
+<body>
+
+    <h1>SONGsmith Mini</h1>
+    <p>Choose an artist style, fill in the blanks, and generate your song.</p>
+
+    <div class="input-group">
+        <label for="artist">Artist Style:</label>
+        <select id="artist">
+            <option value="taylor">Taylor Swift (Country & Pop Catalog)</option>
+            <option value="beatles">The Beatles (60s Rock & Psychedelic Catalog)</option>
+            <option value="drake">Drake (Melancholic R&B & Hip-Hop Catalog)</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label for="phrase">A phrase for the chorus:</label>
+        <input type="text" id="phrase" value="dancing in the headlights">
+    </div>
+
+    <div class="input-group">
+        <label for="object">A physical object:</label>
+        <input type="text" id="object" value="faded leather jacket">
+    </div>
+
+    <div class="input-group">
+        <label for="place">A place or name:</label>
+        <input type="text" id="place" value="the old highway">
+    </div>
+
+    <button onclick="generateLyrics()">Generate Song</button>
+
+    <div id="output" style="display:none;"></div>
+
+    <script>
+        // Dictionary of words unique to each artist's whole catalog
+        const vocabulary = {
+            taylor: ["cardigan", "midnight rain", "neon signs", "2 AM whispers", "golden string"],
+            beatles: ["sunshine", "submarines", "yesterday", "nowhere man", "diamond skies"],
+            drake: ["views", "late-night texts", "expensive taste", "fake friends", "the 6ix"]
+        };
+
+        function generateLyrics() {
+            const artist = document.getElementById('artist').value;
+            const phrase = document.getElementById('phrase').value;
+            const object = document.getElementById('object').value;
+            const place = document.getElementById('place').value;
+
+            // Grab random vocabulary words from that specific artist's universe
+            const artistWords = vocabulary[artist];
+            const word1 = artistWords[0];
+            const word2 = artistWords[1];
+            const word3 = artistWords[2];
+
+            // Assemble the song structure
+            let song = `
+            <b>[VERSE 1]</b>
+            Staring out at ${place}, looking at the view.
+            Holding onto this ${object}, thinking about you.
+            The air feels full of ${word1}, heavy and slow,
+            With secrets that only the two of us know.
+
+            <b>[CHORUS]</b>
+            Oh, hear the rhythm of the ${word2},
+            Singing, "${phrase}."
+            Caught up in the patterns of yesterday's maze,
+            Shouting, "${phrase}."
+
+            <b>[BRIDGE]</b>
+            But we built our walls out of ${word3} and dust,
+            Trying to find something that we could still trust.
+            If you ever go back to ${place}, look around,
+            Leave that old ${object} right there on the ground.
+
+            <b>[OUTRO]</b>
+            Fading out near ${place}...
+            Still thinking about that ${object}...
+            Just an echo of ${word1}...
+            `;
+
+            // Display the result on the page
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = song;
+            outputDiv.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
